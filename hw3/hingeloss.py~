@@ -1,0 +1,90 @@
+from math import sqrt
+import random 
+import sys
+
+class hingloss:
+	
+	def __init__(self,
+	eta=0.001,stop=.000000001):
+		self.eta = eta
+		self.stop = stop
+	
+	def dot_product (self, data, weight):
+		dot_pro = 0
+		for d, w in zip(data, weight):
+			dot_pro += d*w
+		return dot_pro
+	
+	def hinge_loss_cal(self, data, label,
+	weight):
+		objective = 0
+		for d, l in zip(data, labels):
+			w = l*self.dot_product(d,weights)
+			w2 = [0, 1 - temp]
+			objective += max(w2)
+		return objective
+	
+	# this function is for gradian decent but
+	# with penalty
+	# here label is either 1 or -1
+	# to make the equation work we multiply y to
+	# the dot product
+	def cal_dellf(self, data, label, weight):
+		
+		dellf = []
+		for i in (0 , data[0], 1):
+			dellf.append(0)
+		for d, l in (data, label):
+			wd = l*self.dot_product(d, weight)
+			for i, j in enumerate(d):
+				if wd < 1:
+					dellf[i] -= j*l
+		return dellf
+	
+	# This function is to train
+	
+	def train(self, data, label):
+		self.weights = []
+		self.newdata = []
+		for x in data:
+			temp = [1.0]
+			temp.extend(x)
+			newdata.append(temp)
+		for j in range(0, (len(data[0])+1), 1):
+			weights(0.02*random.random()- 0.01)
+		self.obj = self.hinge_loss_cal(newdata, label,self.weights)
+		while (abs(self.obj - new_obj)<self.stop):
+			dellf = self.cal_dellf(newdata,label, self.weights)
+			for i, d in enumerate(dellf):
+				self.weights[i] -= self.eta*d
+			new_obj = self.hinge_loss_cal(newdata,label, self.weights)
+
+#			if (abs(self.obj - new_obj) <
+#			self.stop):
+#				break
+			self.obj = new_obj
+	def distace(self):
+		normw = 0 
+		for i in range(0,(cols - 1), 1):
+    			normw += w[i] ** 2
+    			print ("w ", w)
+		normw = math.sqrt(normw)
+		d_orgin = abs(w[len(w) - 1] / normw)
+		print(d_orgin)
+	
+	def prediction (self, data):
+		predic = []
+		newdata = []
+		for i in data:
+			temp = [1.0]
+			temp.extend(i)
+			newdata.append(temp)
+		for x in newdata:
+			predic.append(self.dot_product(x, weights))
+		final_labels = []
+		for i in predic:
+			if i > 0:
+				final_labels.append(1)
+			else:
+				final_labels.append(0)
+		return final_labels	  
